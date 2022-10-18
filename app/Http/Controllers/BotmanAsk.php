@@ -29,13 +29,24 @@ class BotmanAsk extends Conversation
         Button::create('yes button')->value('yes'),
         Button::create('no button')->value('no')
         ]);
-        
+
         $this->ask($question, function (Answer $answer3){
-             if($answer3->isInteractiveMessageReply()){
-             $selectedValue = $answer3->getValue(); // yes or no
-             $selectedText = $answer3->getText();  // yes button or no button
-             }
-         });
+            if($answer3->isInteractiveMessageReply()){
+            $this->say('you selected '.$answer3->getValue());
+            }
+            else {
+                $this->repeat();
+            }
+        });
+        
+        
+
+        // $this->ask($question, function (Answer $answer3){
+        //      if($answer3->isInteractiveMessageReply()){
+        //      $selectedValue = $answer3->getValue(); // yes or no
+        //      $selectedText = $answer3->getText();  // yes button or no button
+        //      }
+        //  });
 
         // $this->ask($question, function (Answer $answer3){
         //     if($answer3->isInteractiveMessageReply()){

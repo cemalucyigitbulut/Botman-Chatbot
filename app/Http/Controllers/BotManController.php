@@ -31,7 +31,7 @@ class BotManController extends Controller
         $botman->fallback(function($bot){
             $message = $bot->getMessage();
             $bot->reply('Sorry, I did not understand "' .$message->getText().'"');
-            $bot->reply('Here is a list of commands I understand: (my name is [name]) , (say my name) ,(video) , (audio)  ,(show me buttons) , (colour)   ');
+            $bot->reply('Here is a list of commands I understand: (my name is [name]) , (say my name) ,(video) , (audio)  ,(show me buttons) , (colour) , (skip) ,(conversation), (stop) ');
         });
    
         $botman->hears('Hi|hi|hey|hello|howdy|HI|Hİ|yo|Yo|YO (.*)', function($botman) {
@@ -53,12 +53,20 @@ class BotManController extends Controller
    
         });
 
+        $botman->hears('skip', function ($botyman){
+             $botyman->reply('conversation skipped');
+        })->skipsConversation();
+
+        $botman->hears('stop', function ($botyman){
+            $botyman->reply('conversation stopped');
+        })->stopsConversation();
+
         $botman->hears('colour' , function ($boty){
                 $boty->ask('what is your fav colour ?', function ($answer4,$conversation){
                     $value2 = $answer4->getText();
                     $conversation->say('nice choice , i like '.$value2.' too');
                 });
-        });
+        })->skipsConversation();
 
         $botman->hears('conversation' , function ($boty){
             $boty->startConversation(new NewBotmanConversation);

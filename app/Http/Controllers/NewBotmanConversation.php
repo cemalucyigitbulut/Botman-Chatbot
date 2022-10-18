@@ -26,7 +26,12 @@ class NewBotmanConversation extends Conversation
     
       //$this->say('Hi');
       $this->ask('Hi , What is your name ?', function ($answer){
-               $this->name = $answer->getText();
+               $value = $answer->getText();
+               if($value === 'name'){
+               //$this->say('not look like a name to me');
+               return $this->repeat('not look like a name to me , please provide your real name');
+               }
+               
                $this->say('Nice name '.$this->name.' , now i will ask your surname');
 
                $this->askSurname();
